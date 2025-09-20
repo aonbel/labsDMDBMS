@@ -50,6 +50,7 @@
 - book_genre (Связь книга-жанр): Промежуточная таблица для связи Many-to-Many между books и genres (книга может относиться к нескольким жанрам).
 
 ## Описание сущностей базы данных
+
 ### Таблица `users`
 | Имя поля | Тип | Ограничения | Связи |
 |----------|-----|-------------|-------|
@@ -85,7 +86,7 @@
 | id | SERIAL | PRIMARY KEY | |
 | book_id | INTEGER | NOT NULL | FOREIGN KEY REFERENCES books(id) ON DELETE CASCADE |
 | inventory_number | VARCHAR(50) | UNIQUE, NOT NULL | |
-| status | VARCHAR(20) | NOT NULL DEFAULT 'Available' | |
+| status | book_item_status | NOT NULL DEFAULT 'Available' | |
 
 ### Таблица `authors`
 | Имя поля | Тип | Ограничения | Связи |
@@ -124,7 +125,7 @@
 | user_id | INTEGER | NOT NULL | FOREIGN KEY REFERENCES users(id) |
 | reserved_at | TIMESTAMP | DEFAULT NOW() | |
 | expires_at | TIMESTAMP | NOT NULL | |
-| status | VARCHAR(20) | DEFAULT 'Active' | |
+| status | reservation_status | DEFAULT 'Active' | |
 | UNIQUE(book_id, user_id) WHERE status = 'Active' | | | |
 
 ### Таблица `reviews`
@@ -146,7 +147,6 @@
 | action_type | VARCHAR(100) | NOT NULL | |
 | entity_id | INTEGER | | |
 | timestamp | TIMESTAMP | DEFAULT NOW() | |
-| ip_address | VARCHAR(45) | | |
 
 ### Таблица `book_author` (MTM)
 | Имя поля | Тип | Ограничения | Связи |
@@ -164,4 +164,3 @@
 
 ## Схема базы данных
 
-<img width="1315" height="985" alt="Database scheme" src="https://github.com/user-attachments/assets/3e8db8c8-e0df-48d8-ae71-f3d9e7665f75" />
